@@ -151,7 +151,9 @@ It can be extended via its [plugin](https://plugins.jenkins.io/) architecture, p
 
 ---
 
-# **Jenkins Architecture**
+# **Jenkins** 
+
+## Architecture
 
 ![bg right:50% 90%](images/jenkins_architecture.png)
 
@@ -166,6 +168,18 @@ A user-configured description of work which Jenkins should perform, e.g. buildin
 
 **`Build`**
 The result of a single execution of a Project
+
+---
+
+# **CloudBees Jenkins Platform**
+
+## Architecture
+
+<div style="text-align:center">
+
+![width:1700px](images/cloudbees_jenkins_platform.png)
+
+</div>
 
 ---
 
@@ -594,15 +608,37 @@ A single task. Fundamentally, a step tells Jenkins *what* to do at a particular 
 
 ---
 
-# **CloudBees Jenkins Platform**
+# **Declarative Pipeline**
 
-## Architecture
+<div style="font-size:65%">
 
-<div style="text-align:center">
-
-![width:1700px](images/cloudbees_jenkins_platform.png)
+- `pipeline` - contains the entire Jenkins Pipeline definition
+- `agent` - defines the agent used for the entire Pipeline or a stage
+    - `label` - existing Jenkins node label
+    - `docker` - requires Docker-enabled node
+        - `image` - run inside specified Docker image
+        - `label` - existing Jenkins node label
+        - `args` - arguments for Docker container
+    - `dockerfile` - use a local Dockerfile
+        - `filename` - name of local Dockerfile
+        - `label` - existing Jenkins node label
+        - `args` - arguments for Docker container
+- `stages` - contains Pipeline stages and steps
+    - `stage` - a specific named "stage" of the Pipeline
+        - `steps` - one or more build steps that define the actions in the stage. 
+        Contains one or more of the following:
+            - any build step or build wrapper defined in Pipeline
+ e.g. `sh`, `bat`, `timeout`, `echo`, `archive`, `junit`, etc.
+            - `parallel` (optional) - execute steps in parallel - may not be used with other steps
+            - `script` (optional) - execute *Scripted Pipeline* block
+    - `when` (optional) - Runs stage conditionally
+        - `branch` - stage runs when branch name matches
+        - `expression` - boolean expression
+    - `agent`, `environment`, `tools` and `post` may also optionally be defined in stage
 
 </div>
+
+![bg right:40% 80%](images/declarative_pipeline.png)
 
 ---
 
