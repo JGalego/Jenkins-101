@@ -1,0 +1,22 @@
+---
+version: "3.9"
+
+services:
+  master:
+    image: jenkins/jenkins:$JENKINS_VERSION
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+  gerrit:
+    image: gerritcodereview/gerrit:$GERRIT_VERSION
+    hostname: "http://localhost:9090"
+    ports:
+      - "9090:8080"
+      - "29418:29418"
+  sonarqube:
+    image: sonarqube:$SONARQUBE_VERSION
+    ports:
+      - "9000:9000"
+volumes:
+  master: {}
+  gerrit: {}

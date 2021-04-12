@@ -1,0 +1,8 @@
+/* @theme additional */
+
+@import 'gaia';
+
+section {
+    height: 1080px;
+    width: 1920px;
+}

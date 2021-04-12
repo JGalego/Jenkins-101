@@ -1,0 +1,30 @@
+---
+version: "3.9"
+
+services:
+  gerrit:
+    build: docker/gerrit
+    hostname: "localhost:9090"
+    ports:
+      - "9090:8080"
+      - "29418:29418"
+    depends_on:
+      - ldap
+  ldap:
+    image: osixia/openldap:stable
+    ports:
+      - "389:389"
+      - "636:636"
+    environment:
+      - "LDAP_ADMIN_PASSWORD=secret"
+  ldap-admin:
+    image: osixia/phpldapadmin:stable
+    ports:
+      - "6443:443"
+    environment:
+      - PHPLDAPADMIN_LDAP_HOSTS=ldap
+volumes:
+  master: {}
+  gerrit: {}
+  ldap: {}
+  ldap-admin: {}
